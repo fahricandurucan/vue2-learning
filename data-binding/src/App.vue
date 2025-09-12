@@ -1,17 +1,57 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>*** v-model, data ve iki yönlü bağlama ***</h1>
+    <p>{{ name }}</p>
+    <input type="text" v-model="name" placeholder="Adınızı Giriniz"/>
+
+    <h1>*** method, clik kullanımı ***</h1>
+    <p>{{ count }}</p>
+    <button @click="increment">Arttır</button> <button @click="decrease">Azalt</button>
+
+    <h1>*** computed kullanımı ***</h1>
+    <p>Orijinal: {{ message }}</p>
+    <p>Büyük Harf: {{ upperCase }}</p>
+
+    <h1>*** watch kullanımı ***</h1>
+    <input v-model="watchName" placeholder="Adınızı girin"/>
+    <p>Merhaba: {{ greeting }}</p>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  data() {
+    return {
+      name: '',
+      count: 0,
+      message: 'vue öğrenmeye başladım',
+      watchName: '',
+    }
+  },
+  methods: {
+    increment() {
+      this.count += 1;
+    },
+    decrease() {
+      if(this.count > 0){
+        this.count -= 1;
+      }
+      
+    }
+  },
+  computed: {
+    upperCase() {
+      return this.message.toUpperCase();
+    }
+  },
+   watch: {
+    watchName(newVal) {
+      this.greeting = newVal ? `Merhaba, ${newVal}!` : "";
+    }
   }
 }
 </script>
