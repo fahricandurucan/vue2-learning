@@ -15,6 +15,26 @@
             </div>
         </div>
 
+        <!-- Search kısmı -->
+
+        <div class="q-mb-md">
+            <q-card flat bordered class="q-pa-md bg-white">
+                <div class="row q-col-gutter-md items-center">
+                    <div class="col-12 col-md-4">
+                        <q-input outlined dense placeholder="Başlık/Açıklama ara..." clearable v-model="searchType" />
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <q-select outlined dense label="Öncelik" :options="['Düşük', 'Orta', 'Yüksek']"
+                            v-model="searchPriority" clearable />
+                    </div>
+                    <div class="col-6 col-md-5">
+                        <q-select outlined dense multiple use-chips label="Etiketler" v-model="searchTags"
+                            :options="['İş', 'Kişisel', 'Önemli']" clearable />
+                    </div>
+                </div>
+            </q-card>
+        </div>
+
         <!-- Tamamlanmayan ve yeni eklnen görevler kısmı -->
         <div v-if="activeTodoList && activeTodoList.length" class="q-mb-md"
             style="max-height: 300px; overflow-y: auto;">
@@ -115,7 +135,7 @@
         </div>
 
         <!-- Boş durum -->
-        <div v-if="!(getTodoList && getTodoList.length)">
+        <div v-if="!(completedTodoList && completedTodoList.length) && !(activeTodoList && activeTodoList.length)">
             <q-card flat bordered class="q-pa-lg flex flex-center column bg-grey-1">
                 <q-icon name="assignment" size="48px" color="grey-5" />
                 <div class="text-subtitle1 q-mt-sm">Henüz eklenmiş bir todo yok</div>
@@ -138,6 +158,9 @@ export default {
     },
     data() {
         return {
+            searchType: '',
+            searchPriority: '',
+            searchTags: [],
         }
     },
     computed: {
@@ -146,13 +169,33 @@ export default {
             return this.$store.getters.allTodos;
         },
         activeTodoList() {
-            return this.$store.getters.activeTodoList;
+            return this.$store.getters.activeTodoList
+                .filter(todo => {
+                    if (!this.searchType) return true
+                    return todo.title.toLowerCase().includes(this.searchType.toLowerCase()) ||
+                        todo.description.toLowerCase().includes(this.searchType.toLowerCase())
+                })
+                .filter(todo => {
+                    if (!this.searchPriority) return true
+                    return todo.priority === this.searchPriority
+                })
+                .filter(todo => {
+                    if (!this.searchTags || !this.searchTags.length) return true
+                    return todo.tag.some(tag => this.searchTags.includes(tag))
+                });
             // return (this.getTodoList || []).filter(t => !t.isDone)
         },
         completedTodoList() {
-            return this.$store.getters.completedTodoList;
+            return this.$store.getters.completedTodoList
+                .filter(todo => {
+                    if (!this.searchPriority) return true
+                    return todo.priority === this.searchPriority
+                })
+                .filter(todo => {
+                    if (!this.searchTags || !this.searchTags.length) return true
+                    return todo.tag.some(tag => this.searchTags.includes(tag))
+                });
         },
-
     },
     methods: {
         toggleTodoDone(todo) {
