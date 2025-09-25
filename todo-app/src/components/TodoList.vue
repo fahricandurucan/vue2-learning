@@ -188,6 +188,11 @@ export default {
         completedTodoList() {
             return this.$store.getters.completedTodoList
                 .filter(todo => {
+                    if (!this.searchType) return true
+                    return todo.title.toLowerCase().includes(this.searchType.toLowerCase()) ||
+                        todo.description.toLowerCase().includes(this.searchType.toLowerCase())
+                })
+                .filter(todo => {
                     if (!this.searchPriority) return true
                     return todo.priority === this.searchPriority
                 })
