@@ -7,95 +7,66 @@ export default new Vuex.Store({
   state: {
     myTodoList:[
       {
-        id: 1,
-        title: 'Todo 1',
-        description: 'Todo 1 description',
-        isDone: false,
-        priority: 'Düşük',
-        tag: ['İş']
-       
-      },
-      {
-        id: 2,
-        title: 'Todo 2',
-        description: 'Todo 2 description',
-        isDone: true,
-        priority: 'Orta',
-        tag: ['İş']
-      },
-      {
-        id: 3,
-        title: 'Todo 3',
-        description: 'Todo 3 description',
-        isDone: false,
-        priority: 'Yüksek',
-        tag: ['İş']
-      },
-      {
-        id: 4,
-        title: 'Todo 4',
-        description: 'Todo 4 description',
-        isDone: false,
-        priority: 'Yüksek',
-        tag: ['İş']
-      },
-      {
-        id: 5,
-        title: 'Todo 5',
-        description: 'Todo 5 description',
-        isDone: false,
-        priority: 'Yüksek',
-        tag: ['İş']
-      }
-      ,
-      // {
-      //   id: 6,
-      //   title: 'Todo 6',
-      //   description: 'Todo 6 description',
-      //   isDone: false,
-      //   priority: 'Yüksek',
-      //   tag: ['İş']
-      // },
-      // {
-      //   id: 7,
-      //   title: 'Todo 7',
-      //   description: 'Todo 7 description',
-      //   isDone: false,
-      //   priority: 'Yüksek',
-      //   tag: ['İş']
-      // },
-      // {
-      //   id: 8,
-      //   title: 'Todo 8',
-      //   description: 'Todo 8 description',
-      //   isDone: false,
-      //   priority: 'Yüksek',
-      //   tag: ['İş']
-      // },
-      // {
-      //   id: 9,
-      //   title: 'Todo 9',
-      //   description: 'Todo 9 description',
-      //   isDone: false,
-      //   priority: 'Yüksek',
-      //   tag: ['İş']
-      // },
-      // {
-      //   id: 10,
-      //   title: 'Todo 10',
-      //   description: 'Todo 10 description',
-      //   isDone: false,
-      //   priority: 'Yüksek',
-      //   tag: ['İş']
-      // },
-      // {
-      //   id: 11,
-      //   title: 'Todo 11',
-      //   description: 'Todo 11 description',
-      //   isDone: false,
-      //   priority: 'Yüksek',
-      //   tag: ['İş']
-      // },
+    id: 1,
+    title: 'Toplantı notlarını hazırla',
+    description: 'Yarınki ekip toplantısı için tüm notları toparla ve sunuma ekle.',
+    isDone: false,
+    priority: 'Yüksek',
+    tag: ['İş'],
+    createdAt: new Date('2025-09-20T10:00:00'),
+    updatedAt: new Date('2025-09-21T15:30:00'),
+    dueDate: new Date('2025-09-25T09:00:00'),
+    completedAt: null
+  },
+  {
+    id: 2,
+    title: 'Alışveriş listesi oluştur',
+    description: 'Hafta sonu için gerekli gıda ve temizlik malzemelerini listele.',
+    isDone: true,
+    priority: 'Orta',
+    tag: ['Kişisel'],
+    createdAt: new Date('2025-09-18T12:15:00'),
+    updatedAt: new Date('2025-09-19T14:00:00'),
+    dueDate: new Date('2025-09-22T18:00:00'),
+    completedAt: new Date('2025-09-21T17:45:00')
+  },
+  {
+    id: 3,
+    title: 'Projeyi GitHub’a yükle',
+    description: 'Tüm dosyaları GitHub repository’sine yükle ve README güncelle.',
+    isDone: false,
+    priority: 'Yüksek',
+    tag: ['İş', 'Önemli'],
+    createdAt: new Date('2025-09-19T09:30:00'),
+    updatedAt: null,
+    dueDate: new Date('2025-09-28T12:00:00'),
+    completedAt: null
+  },
+  {
+    id: 4,
+    title: 'Kitap oku',
+    description: 'Haftalık okuma hedefine göre 50 sayfa oku.',
+    isDone: true,
+    priority: 'Düşük',
+    tag: ['Kişisel'],
+    createdAt: new Date('2025-09-15T20:00:00'),
+    updatedAt: new Date('2025-09-18T21:00:00'),
+    dueDate: new Date('2025-09-20T20:00:00'),
+    completedAt: new Date('2025-09-18T20:30:00')
+  },
+  {
+    id: 5,
+    title: 'Ev temizliği yap',
+    description: 'Salonda ve mutfakta detaylı temizlik yap.',
+    isDone: false,
+    priority: 'Orta',
+    tag: ['Kişisel', 'Önemli'],
+    createdAt: new Date('2025-09-22T11:00:00'),
+    updatedAt: null,
+    dueDate: new Date('2025-09-26T16:00:00'),
+    completedAt: null
+  }
+   
     ],
     completedTodoList: [],
     notCompletedTodoList: [],
@@ -120,7 +91,14 @@ export default new Vuex.Store({
       const todo = state.myTodoList.find(t => t.id === todoId)
       if (todo) {
         todo.isDone = !todo.isDone
+        
+        if (todo.isDone) {
+          todo.completedAt = new Date()
+        } else {
+          todo.completedAt = null
+        }
       }
+
     },
     deleteTodo(state, todoId){
       const todoIndex = state.myTodoList.findIndex(todo => todo.id === todoId);
@@ -130,6 +108,7 @@ export default new Vuex.Store({
     },
     updateTodo(state, updatedTodo){
       const index = state.myTodoList.findIndex(todo => todo.id === updatedTodo.id);
+      
       if (index !== -1) {
         state.myTodoList.splice(index, 1, updatedTodo)
       }

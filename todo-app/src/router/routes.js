@@ -1,18 +1,19 @@
 import Home from 'src/pages/Home.vue'
+import Settings from 'src/pages/Settings.vue'
+import Todos from 'src/pages/Todos.vue'
 
 const routes = [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: Home }
+      { path: '', component: Home },
+      {path: '/todos', component: Todos},
+      {path: '/settings', component: Settings}
     ]
   },
-  // {
-  //   path: '/',
-  //   name: 'Home',
-  //   component: Home
-  // },
+
+
 
   // Always leave this as last one,
   // but you can also remove it

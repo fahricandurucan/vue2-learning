@@ -64,6 +64,20 @@
                                         {{ tag }}
                                     </q-chip>
                                 </template>
+                                <!-- Tarih meta (UI only) -->
+                                <q-separator vertical spaced class="q-ml-xs q-mr-xs" />
+                                <q-chip dense square color="grey-4" text-color="black" v-if="todo.createdAt">
+                                    Oluşturulma: {{ todo.createdAt | formatDate }}
+                                </q-chip>
+                                <q-chip dense square color="grey-4" text-color="black" v-if="todo.updatedAt">
+                                    Son düzenleme: {{ todo.updatedAt | formatDate }}
+                                </q-chip>
+                                <q-chip dense square :color="todo.dueDate && !todo.isDone ? 'blue-2' : 'grey-4'" text-color="black" v-if="todo.dueDate">
+                                    Hedef: {{ todo.dueDate | formatDate }}
+                                </q-chip>
+                                <q-chip dense square color="red-3" text-color="black" v-if="todo.dueDate && !todo.isDone && todo.isOverdue">
+                                    Süre doldu
+                                </q-chip>
                             </div>
                         </q-item-section>
 
@@ -117,6 +131,17 @@
                                         {{ tag }}
                                     </q-chip>
                                 </template>
+                                <!-- Tarih meta (UI only) -->
+                                <q-separator vertical spaced class="q-ml-xs q-mr-xs" />
+                                <q-chip dense square color="grey-4" text-color="black" v-if="todo.createdAt">
+                                    Oluşturulma: {{ todo.createdAt | formatDate }}
+                                </q-chip>
+                                <q-chip dense square color="grey-4" text-color="black" v-if="todo.updatedAt">
+                                    Son düzenleme: {{ todo.updatedAt | formatDate }}
+                                </q-chip>
+                                <q-chip dense square color="green-4" text-color="black" v-if="todo.completedAt">
+                                    Tamamlanma: {{ todo.completedAt | formatDate }}
+                                </q-chip>
                             </div>
                         </q-item-section>
                         <q-item-section side top>
@@ -149,6 +174,7 @@
 <script>
 import ConfirmDelete from './ConfirmDelete.vue';
 import UpdateModal from './UpdateModal.vue';
+
 
 export default {
     name: 'TodoList',
@@ -207,6 +233,8 @@ export default {
             this.$store.commit('toggleTodoDone', todo.id);
 
         },
+        
+
     }
 
 }

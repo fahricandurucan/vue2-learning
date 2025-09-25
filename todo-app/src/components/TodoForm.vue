@@ -18,6 +18,15 @@
           <q-select outlined label="Etiketler" multiple use-chips :options="['İş', 'Kişisel', 'Önemli']"
             v-model="newTodo.tag" />
 
+          <div class="row q-col-gutter-md q-mt-md">
+            <div class="col-12 col-md-6">
+              <q-input outlined type="date" label="Hedef Tarih" placeholder="YYYY-MM-DD" v-model="tempDate" />
+            </div>
+            <div class="col-12 col-md-6">
+              <q-input outlined type="time" label="Hedef Saat" placeholder="HH:mm" v-model="tempTime" />
+            </div>
+          </div>
+
         </q-card-section>
 
         <q-card-actions class="justify-end">
@@ -40,8 +49,11 @@ export default {
         description: '',
         isDone: false,
         priority: '',
-        tag: []
+        tag: [],
+        dueDate: null,
       },
+      tempDate: '',
+      tempTime: ''
     }
   },
   methods: {
@@ -56,8 +68,16 @@ export default {
         ? this.$store.state.myTodoList[this.$store.state.myTodoList.length - 1].id
         : 0;
 
+      if (this.tempDate && this.tempTime) {
+        const [year, month, day] = this.tempDate.split('-')
+        const [hours, minutes] = this.tempTime.split(':')
+        this.newTodo.dueDate = new Date(year, month - 1, day, hours, minutes)
+      }
+
+      const createdAt = new Date();
+
       // mutation çağırıyoruz burada
-      this.$store.commit('addNewTodo', { ...this.newTodo, id: lastId + 1 })
+      this.$store.commit('addNewTodo', { ...this.newTodo, id: lastId + 1, createdAt: createdAt })
 
       this.resetForm()
     },
@@ -67,10 +87,14 @@ export default {
         description: '',
         isDone: false,
         priority: '',
-        tag: []
+        tag: [],
+        dueDate: '',
+        dueTime: ''
       }
       this.titleError = false
       this.priorityError = false
+      this.tempDate = ''
+      this.tempTime = ''
     }
   }
 }

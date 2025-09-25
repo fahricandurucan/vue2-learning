@@ -52,6 +52,7 @@ export default {
             this.showDialog = true
         },
         updateTodo() {
+            this.localTodo.updatedAt = new Date()
             this.$store.commit('updateTodo', this.localTodo)
             this.showDialog = false
             this.$q.notify({ type: 'positive', message: 'Görev güncellendi' })
