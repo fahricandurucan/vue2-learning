@@ -16,7 +16,8 @@ export default new Vuex.Store({
     createdAt: new Date('2025-09-20T10:00:00'),
     updatedAt: new Date('2025-09-21T15:30:00'),
     dueDate: new Date('2025-09-25T09:00:00'),
-    completedAt: null
+    completedAt: null,
+    status: 'unCompleted'
   },
   {
     id: 2,
@@ -28,7 +29,8 @@ export default new Vuex.Store({
     createdAt: new Date('2025-09-18T12:15:00'),
     updatedAt: new Date('2025-09-19T14:00:00'),
     dueDate: new Date('2025-09-22T18:00:00'),
-    completedAt: new Date('2025-09-21T17:45:00')
+    completedAt: new Date('2025-09-21T17:45:00'),
+    status: 'completed'
   },
   {
     id: 3,
@@ -40,7 +42,8 @@ export default new Vuex.Store({
     createdAt: new Date('2025-09-19T09:30:00'),
     updatedAt: null,
     dueDate: new Date('2025-09-28T12:00:00'),
-    completedAt: null
+    completedAt: null,
+    status: 'unCompleted'
   },
   {
     id: 4,
@@ -52,7 +55,8 @@ export default new Vuex.Store({
     createdAt: new Date('2025-09-15T20:00:00'),
     updatedAt: new Date('2025-09-18T21:00:00'),
     dueDate: new Date('2025-09-20T20:00:00'),
-    completedAt: new Date('2025-09-18T20:30:00')
+    completedAt: new Date('2025-09-18T20:30:00'),
+    status: 'completed'
   },
   {
     id: 5,
@@ -64,7 +68,8 @@ export default new Vuex.Store({
     createdAt: new Date('2025-09-22T11:00:00'),
     updatedAt: null,
     dueDate: new Date('2025-09-26T16:00:00'),
-    completedAt: null
+    completedAt: null,
+    status: 'continue'
   }
    
     ],
@@ -77,10 +82,16 @@ export default new Vuex.Store({
       return state.myTodoList;
     },
     completedTodoList(state){
-      return state.myTodoList.filter(todo => todo.isDone === true)
+      return state.myTodoList.filter(todo => (todo.isDone === true) && (todo.status === 'completed'))
     },
     activeTodoList(state){
-      return state.myTodoList.filter(todo => todo.isDone === false)
+      return state.myTodoList.filter(todo => (todo.isDone === false) && (todo.status === 'unCompleted'))
+    },
+    inProgressTodoList(state){
+      return state.myTodoList.filter(todo => todo.status === 'continue')
+    },
+     onHoldTodoList(state){
+      return state.myTodoList.filter(todo => todo.status === 'wait')
     }
   },
   mutations: {
@@ -113,8 +124,20 @@ export default new Vuex.Store({
         state.myTodoList.splice(index, 1, updatedTodo)
       }
 
+    },
+    changeTaskStatusForKanban(state, { todoId, status }) {
+      let todo = state.myTodoList.find(t => t.id === todoId);
+      console.log('mutation başlangıcı '+state + todoId)
+      if (todo) {
+        todo.status = status;
+      }
+      if(status === 'completed'){
+        todo.isDone = true;
+        todo.completedAt = new Date()
+      }
     }
   },
+
   // async
   actions: {
     setUser(context){

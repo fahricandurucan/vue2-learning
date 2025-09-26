@@ -55,7 +55,7 @@
 
                             <div class="row items-center q-gutter-xs q-mt-sm">
                                 <q-badge
-                                    :color="todo.priority === 'Düşük' ? 'green' : (todo.priority === 'Orta' ? 'blue' : (todo.priority === 'Yüksek' ? 'red' : 'grey'))"
+                                    :color="todo.priority === 'Düşük' ? 'orange' : (todo.priority === 'Orta' ? 'blue' : (todo.priority === 'Yüksek' ? 'red' : 'grey'))"
                                     text-color="white" :label="'Öncelik: ' + (todo.priority || 'Belirsiz')" />
 
                                 <template v-for="(tag, i) in todo.tag">

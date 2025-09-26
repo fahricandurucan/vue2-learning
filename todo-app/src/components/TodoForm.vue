@@ -51,6 +51,7 @@ export default {
         priority: '',
         tag: [],
         dueDate: null,
+        status: 'unCompleted'
       },
       tempDate: '',
       tempTime: ''
@@ -76,10 +77,15 @@ export default {
 
       const createdAt = new Date();
 
+      this.$q.notify({ type: 'positive', message: 'Yeni Görev Eklendi' })
+
+
       // mutation çağırıyoruz burada
       this.$store.commit('addNewTodo', { ...this.newTodo, id: lastId + 1, createdAt: createdAt })
 
       this.resetForm()
+
+
     },
     resetForm() {
       this.newTodo = {
