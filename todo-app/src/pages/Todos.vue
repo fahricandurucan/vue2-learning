@@ -1,5 +1,5 @@
 <template>
-  <q-page padding>
+  <q-page padding :class="$q.dark.isActive ? 'bg-blue-grey-10 text-grey-2' : 'bg-grey-1 text-dark'">
     <kanban-board :columns="columns" />
   </q-page>
 </template>
@@ -15,7 +15,7 @@ export default {
     columns() {
       return [
         {
-          title: 'Yapılacak', status: 'unCompleted', color: 'grey-7', textColor: 'white', items: this.$store.getters.activeTodoList
+          title: 'Yapılacak', status: 'unCompleted', color: 'grey-7', textColor: 'white', items: this.$store.getters.unCompletedTodoList
         },
         {
           title: 'Devam', status: 'continue', color: 'indigo', textColor: 'white', items: this.$store.getters.inProgressTodoList

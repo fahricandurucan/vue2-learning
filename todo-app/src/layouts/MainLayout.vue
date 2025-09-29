@@ -1,32 +1,39 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <!-- Üst toolbar -->
+    <q-header elevated :class="$q.dark.isActive ? 'bg-blue-grey-10 text-grey-2' : 'bg-primary text-white'">
       <q-toolbar>
-        <q-btn flat dense round icon="menu" aria-label="Menu" @click="leftDrawerOpen = !leftDrawerOpen" />
+        <q-btn flat dense round icon="menu" aria-label="Menu" @click="leftDrawerOpen = !leftDrawerOpen"
+          :color="$q.dark.isActive ? 'grey-3' : 'white'" />
 
         <q-toolbar-title>
           ToDo App
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <div class="text-caption">
+          Quasar v{{ $q.version }}
+        </div>
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered content-class="bg-grey-1">
+    <!-- Yan menü -->
+    <q-drawer v-model="leftDrawerOpen" show-if-above bordered
+      :content-class="$q.dark.isActive ? 'bg-blue-grey-9 text-grey-2' : 'bg-grey-1 text-dark'">
       <q-list>
-        <q-item-label header class="text-grey-8">
+        <q-item-label header :class="$q.dark.isActive ? 'text-grey-5' : 'text-grey-8'">
           ToDo Uygulama Menüsü
         </q-item-label>
-        <MenuItem v-for="(item, i) in menuItems" :key="i" v-bind="item">
-        </MenuItem>
+        <MenuItem v-for="(item, i) in menuItems" :key="i" v-bind="item"></MenuItem>
       </q-list>
     </q-drawer>
 
-    <q-page-container>
+    <!-- Sayfa container -->
+    <q-page-container :class="$q.dark.isActive ? 'bg-blue-grey-10 text-grey-2' : 'bg-grey-2 text-dark'">
       <router-view />
     </q-page-container>
   </q-layout>
 </template>
+
 
 <script>
 import MenuItem from 'src/components/MenuItem.vue';

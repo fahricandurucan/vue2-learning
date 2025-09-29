@@ -1,11 +1,29 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { LocalStorage, Dark } from 'quasar'
+import { localStoragePlugin } from './localStoragePlugin'
 
 Vue.use(Vuex)
+const STORAGE_KEY = 'myTodoList'
+
+// Başlangıç state’i localStorage’dan yükle
+function loadInitialStates() {
+  const saved = LocalStorage.getItem(STORAGE_KEY)
+  if (!saved) return { todos: [], darkMode: false }
+  return {
+    todos: Array.isArray(saved.todos) ? saved.todos : null,
+    darkMode: saved.darkMode || false
+  }
+}
+
+const initialStates = loadInitialStates()
+Dark.set(initialStates.darkMode)
 
 export default new Vuex.Store({
   state: {
-    myTodoList:[
+    myTodoList: 
+    initialStates.todos ||
+    [
       {
     id: 1,
     title: 'Toplantı notlarını hazırla',
@@ -73,6 +91,7 @@ export default new Vuex.Store({
   }
    
     ],
+    darkMode: initialStates.darkMode || false,
     completedTodoList: [],
     notCompletedTodoList: [],
     activeTodo:{}
@@ -85,7 +104,10 @@ export default new Vuex.Store({
       return state.myTodoList.filter(todo => (todo.isDone === true) && (todo.status === 'completed'))
     },
     activeTodoList(state){
-      return state.myTodoList.filter(todo => (todo.isDone === false) && (todo.status === 'unCompleted'))
+      return state.myTodoList.filter(todo => (todo.isDone === false) )
+    },
+     unCompletedTodoList(state){
+      return state.myTodoList.filter(todo =>  (todo.status === 'unCompleted'))
     },
     inProgressTodoList(state){
       return state.myTodoList.filter(todo => todo.status === 'continue')
@@ -95,6 +117,7 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    setTodos(state, todos){ state.myTodoList = todos },
     addNewTodo(state, todo){
       state.myTodoList.push(todo)
     },
@@ -105,8 +128,10 @@ export default new Vuex.Store({
         
         if (todo.isDone) {
           todo.completedAt = new Date()
+          todo.status = 'completed';
         } else {
           todo.completedAt = null
+          todo.status = 'unCompleted';
         }
       }
 
@@ -135,31 +160,40 @@ export default new Vuex.Store({
         todo.isDone = true;
         todo.completedAt = new Date()
       }
+    },
+    setAppTheme(state, isDark){
+      state.darkMode = isDark;
     }
   },
 
-  // async
+  // async ya da mutation çağır
   actions: {
-    setUser(context){
-      context.commit('setUser');
+    setTodos(context){
+      context.commit('setTodos');
     },
-    incrementFollower: ({commit}) => commit('incrementFollower'),
-    decreaseFollower({commit, state}){
-      if(state.activeUser.follower > 0){
-        commit('decreaseFollower')
-      }
+    addNewTodo({ commit }, todo){
+      commit('addNewTodo', todo)
     },
-   incrementFollowerAsync({ commit }) {
-      return new Promise((resolve) => {   
-        setTimeout(() => {
-          commit('incrementFollower')
-          resolve() 
-        }, 5000)
-      })
+    toggleTodoDone({ commit }, todoId){
+      commit('toggleTodoDone', todoId)
+    },
+    deleteTodo({ commit }, todoId){
+      commit('deleteTodo', todoId)
+    },
+    updateTodo({ commit }, updatedTodo){
+      commit('updateTodo', updatedTodo)
+    },
+    changeTaskStatusForKanban({ commit }, { todoId, status }){
+      commit('changeTaskStatusForKanban', { todoId, status })
+    },
+    setAppTheme({ commit }, isDark){
+      commit('setAppTheme',isDark)
+        console.log(isDark)
+        Dark.set(isDark)
     }
-
-
   },
+  plugins: [localStoragePlugin(STORAGE_KEY)],
+
   modules: {
   }
 })

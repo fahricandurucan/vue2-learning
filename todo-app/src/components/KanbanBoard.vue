@@ -1,32 +1,37 @@
 <template>
   <div>
+    <!-- Başlık -->
     <div class="row items-center q-mb-lg">
       <div class="col">
-        <div class="text-h5">Kanban</div>
-        <div class="text-caption text-grey">Durum bazlı görev görünümü (UI only)</div>
+    <div class="text-h5" :class="$q.dark.isActive ? 'text-blue-3' : 'text-dark'">Kanban</div>
+    <div class="text-caption" :class="$q.dark.isActive ? 'text-grey-5' : 'text-grey'">
+          Durum bazlı görev görünümü
+        </div>
       </div>
       <div class="col-auto q-gutter-sm">
-        <q-btn dense flat round icon="refresh" color="grey-7" />
-        <q-btn dense unelevated color="primary" icon="add" label="Yeni Görev" />
+        <q-btn dense :unelevated="!$q.dark.isActive" :outline="$q.dark.isActive" :color="$q.dark.isActive ? 'blue-4' : 'primary'" icon="add" label="Yeni Görev" @click="goHome" />
       </div>
     </div>
 
+    <!-- Kanban kolonları -->
     <div class="row q-col-gutter-md">
       <div v-for="(col, cIdx) in localColumns" :key="cIdx" class="col-12 col-md-3">
-        <q-card class="column full-height">
+        <q-card :class="$q.dark.isActive ? 'bg-blue-grey-9 text-grey-2' : 'bg-white text-dark'" class="column full-height">
           <q-card-section class="row items-center q-gutter-sm">
-            <q-badge :color="col.color" :text-color="col.textColor || 'white'">{{ col.title }}</q-badge>
-            <q-badge color="grey-5" text-color="black" :label="(col.items && col.items.length) || 0" />
+            <q-badge :color="col.color" :text-color="col.textColor || ($q.dark.isActive ? 'white' : 'white')">{{
+              col.title }}</q-badge>
+            <q-badge :color="$q.dark.isActive ? 'grey-7' : 'grey-5'" :text-color="$q.dark.isActive ? 'white' : 'black'"
+              :label="(col.items && col.items.length) || 0" />
           </q-card-section>
-          <q-separator />
+          <q-separator :color="$q.dark.isActive ? 'grey-8' : 'grey-4'" />
           <q-scroll-area style="height: calc(100vh - 260px)">
             <div class="q-pa-sm column q-gutter-sm" @dragover.prevent @drop="onDropColumn(cIdx)">
               <div v-for="(t, idx) in (col.items || [])" :key="cIdx + '-' + idx" class="kanban-draggable"
                 draggable="true" @dragstart="onDragStart(cIdx, idx)" @dragend="onDragEnd">
                 <kanban-card :task="t" :columnIdx="cIdx" />
               </div>
-              <div v-if="!col.items || col.items.length === 0" class="empty-column-placeholder">
-                <div class="text-center text-grey-5 q-pa-lg">
+              <div v-if="!col.items || col.items.length === 0" class="empty-column-placeholder" :class="$q.dark.isActive ? 'empty-dark' : ''">
+                <div class="text-center q-pa-lg" :class="$q.dark.isActive ? 'text-grey-5' : 'text-grey-5'">
                   <q-icon name="inbox" size="48px" class="q-mb-sm" />
                   <div class="text-caption">Kartları buraya sürükleyin</div>
                 </div>
@@ -38,6 +43,7 @@
     </div>
   </div>
 </template>
+
 
 <script>
 import KanbanCard from './KanbanCard.vue'
@@ -120,11 +126,16 @@ export default {
       console.log('status : ' + status)
 
       let todoId = moved.id;
-      this.$store.commit('changeTaskStatusForKanban', { todoId, status });
+      // this.$store.commit('changeTaskStatusForKanban', { todoId, status });
+      this.$store.dispatch('changeTaskStatusForKanban', { todoId, status });
 
       this.onDragEnd()
+    },
+    goHome() {
+      this.$router.replace('/')
     }
   },
+
 
 }
 </script>
@@ -138,6 +149,10 @@ export default {
   border: 2px dashed #e0e0e0;
   border-radius: 8px;
   margin: 8px 0;
+}
+
+.empty-dark {
+  border-color: rgba(255, 255, 255, 0.18);
 }
 
 .kanban-draggable {
