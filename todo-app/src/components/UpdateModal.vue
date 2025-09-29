@@ -59,6 +59,7 @@ export default {
         openDialog() {
             this.localTodo = { ...this.todo, tag: [...this.todo.tag] }
             this.showDialog = true
+
         },
         updateTodo() {
             this.localTodo.updatedAt = new Date()
@@ -66,6 +67,7 @@ export default {
             this.$store.dispatch('updateTodo', this.localTodo)
             this.showDialog = false
             this.$q.notify({ type: 'positive', message: 'Görev güncellendi' })
+            console.log(this.localTodo.status)
         }
     }
 }

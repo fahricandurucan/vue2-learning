@@ -2,7 +2,8 @@
     <div class="q-pa-md column" :class="$q.dark.isActive ? 'bg-blue-grey-10 text-grey-2' : 'bg-grey-1 text-dark'">
 
         <!-- Başlık kısmı -->
-        <q-card flat bordered class="q-mb-md" :class="$q.dark.isActive ? 'bg-blue-grey-9 text-grey-2' : 'bg-white text-dark'">
+        <q-card flat bordered class="q-mb-md"
+            :class="$q.dark.isActive ? 'bg-blue-grey-9 text-grey-2' : 'bg-white text-dark'">
             <q-toolbar>
                 <q-toolbar-title class="row items-center">
                     <q-icon name="checklist" :color="$q.dark.isActive ? 'blue-4' : 'primary'" size="md"
@@ -29,8 +30,9 @@
                 :class="$q.dark.isActive ? 'bg-blue-grey-9 text-grey-2' : 'bg-white text-dark'">
                 <div class="row q-col-gutter-md items-center">
                     <div class="col-12 col-md-4">
-                        <q-input outlined dense rounded placeholder="Başlık/Açıklama ara..." clearable v-model="searchType"
-                            debounce="250" :color="$q.dark.isActive ? 'blue-4' : 'primary'" :input-class="$q.dark.isActive ? 'text-grey-2' : 'text-dark'">
+                        <q-input outlined dense rounded placeholder="Başlık/Açıklama ara..." clearable
+                            v-model="searchType" debounce="250" :color="$q.dark.isActive ? 'blue-4' : 'primary'"
+                            :input-class="$q.dark.isActive ? 'text-grey-2' : 'text-dark'">
                             <template v-slot:prepend>
                                 <q-icon name="search" :color="$q.dark.isActive ? 'grey-4' : 'grey-6'" />
                             </template>
@@ -42,7 +44,7 @@
                     </div>
                     <div class="col-6 col-md-5">
                         <q-select outlined dense rounded multiple use-chips label="Etiketler" v-model="searchTags"
-                            :options="['İş', 'Kişisel', 'Önemli']" clearable
+                            :options="['İş', 'Kişisel', 'Okul', 'Alışveriş', 'Sağlık', 'Finans', 'Hobi']" clearable
                             :color="$q.dark.isActive ? 'blue-4' : 'primary'" />
                     </div>
                 </div>
@@ -56,7 +58,8 @@
                 :class="$q.dark.isActive ? 'bg-blue-grey-9 text-grey-2' : 'bg-white text-dark'">
                 <transition-group name="fade" tag="div">
                     <div v-for="(todo, index) in activeTodoList" :key="(todo.id || index) + '-active'">
-                        <q-item :key="todo.id || index" clickable v-ripple class="q-py-sm" :to="{name: 'todo-detail', params:{id: todo.id}}">
+                        <q-item :key="todo.id || index" clickable v-ripple class="q-py-sm"
+                            :to="{ name: 'todo-detail', params: { id: todo.id } }">
                             <q-item-section avatar>
                                 <q-avatar :color="todo.isDone ? 'positive' : ($q.dark.isActive ? 'grey-6' : 'grey-4')"
                                     text-color="white">
@@ -80,12 +83,19 @@
                                             ? ($q.dark.isActive ? 'blue-4' : 'blue')
                                             : (todo.priority === 'Yüksek'
                                                 ? ($q.dark.isActive ? 'red-4' : 'red')
-                                                : 'grey'))" text-color="white" :label="'Öncelik: ' + (todo.priority || 'Belirsiz')" />
+                                                : 'grey'))" text-color="white"
+                                        :label="'Öncelik: ' + (todo.priority || 'Belirsiz')" />
 
                                     <template v-for="(tag, i) in todo.tag">
                                         <q-chip :key="i" dense :color="$q.dark.isActive ? 'grey-7' : 'grey-5'"
-                                            :text-color="$q.dark.isActive ? 'white' : 'black'"
-                                            :icon="tag === 'İş' ? 'work' : tag === 'Kişisel' ? 'person' : tag === 'Önemli' ? 'priority_high' : 'label'">
+                                            :text-color="$q.dark.isActive ? 'white' : 'black'" :icon="tag === 'İş' ? 'work'
+                                                : tag === 'Kişisel' ? 'person'
+                                                    : tag === 'Okul' ? 'school'
+                                                        : tag === 'Alışveriş' ? 'shopping_cart'
+                                                            : tag === 'Sağlık' ? 'medical_services'
+                                                                : tag === 'Finans' ? 'account_balance_wallet'
+                                                                    : tag === 'Hobi' ? 'brush'
+                                                                        : 'label'">
                                             {{ tag }}
                                         </q-chip>
                                     </template>
@@ -123,13 +133,15 @@
                                         <q-tooltip>Tamamlandı</q-tooltip>
                                     </q-btn>
                                     <q-btn v-else flat round dense icon="radio_button_unchecked"
-                                        :color="$q.dark.isActive ? 'grey-4' : 'grey-7'" @click.stop.prevent="toggleTodoDone(todo)" @mousedown.stop>
+                                        :color="$q.dark.isActive ? 'grey-4' : 'grey-7'"
+                                        @click.stop.prevent="toggleTodoDone(todo)" @mousedown.stop>
                                         <q-tooltip>Henüz tamamlanmadı</q-tooltip>
                                     </q-btn>
                                 </div>
                             </q-item-section>
                         </q-item>
-                        <q-separator :key="'active-sep-' + (todo.id || index)" spaced inset="item" :color="$q.dark.isActive ? 'grey-8' : 'grey-4'" />
+                        <q-separator :key="'active-sep-' + (todo.id || index)" spaced inset="item"
+                            :color="$q.dark.isActive ? 'grey-8' : 'grey-4'" />
                     </div>
                 </transition-group>
             </q-list>
@@ -144,7 +156,8 @@
                 :class="$q.dark.isActive ? 'bg-blue-grey-9 text-grey-2' : 'bg-grey-1 text-dark'">
                 <transition-group name="fade" tag="div">
                     <div v-for="(todo, index) in completedTodoList" :key="(todo.id || index) + '-done'">
-                        <q-item :key="todo.id || index" class="q-py-sm" :to="{name: 'todo-detail', params:{id: todo.id}}">
+                        <q-item :key="todo.id || index" class="q-py-sm"
+                            :to="{ name: 'todo-detail', params: { id: todo.id } }">
                             <q-item-section avatar>
                                 <q-avatar color="positive" text-color="white">
                                     <q-icon name="check" />
@@ -168,7 +181,8 @@
                                             ? ($q.dark.isActive ? 'blue-4' : 'blue')
                                             : (todo.priority === 'Yüksek'
                                                 ? ($q.dark.isActive ? 'red-4' : 'red')
-                                                : 'grey'))" text-color="white" :label="'Öncelik: ' + (todo.priority || 'Belirsiz')" />
+                                                : 'grey'))" text-color="white"
+                                        :label="'Öncelik: ' + (todo.priority || 'Belirsiz')" />
                                     <template v-for="(tag, i) in todo.tag">
                                         <q-chip :key="i" dense :color="$q.dark.isActive ? 'grey-7' : 'grey-5'"
                                             :text-color="$q.dark.isActive ? 'white' : 'black'">
@@ -200,7 +214,8 @@
                                 </div>
                             </q-item-section>
                         </q-item>
-                        <q-separator :key="'done-sep-' + (todo.id || index)" spaced inset="item" :color="$q.dark.isActive ? 'grey-8' : 'grey-4'" />
+                        <q-separator :key="'done-sep-' + (todo.id || index)" spaced inset="item"
+                            :color="$q.dark.isActive ? 'grey-8' : 'grey-4'" />
                     </div>
                 </transition-group>
             </q-list>
@@ -291,7 +306,7 @@ export default {
             this.searchPriority = ''
             this.searchTags = []
         },
-        
+
 
     }
 

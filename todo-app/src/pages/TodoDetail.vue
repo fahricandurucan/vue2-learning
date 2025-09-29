@@ -1,6 +1,6 @@
 <template>
     <q-page padding :class="$q.dark.isActive ? 'bg-blue-grey-10 text-grey-2' : 'bg-grey-1 text-dark'">
-        <div class="row q-col-gutter-md">
+        <div class="row q-col-gutter-md justify-center">
             <div class="col-12 col-md-8">
                 <q-card :class="$q.dark.isActive ? 'bg-blue-grey-9' : 'bg-white'">
                     <q-card-section class="row items-center justify-between">
@@ -22,7 +22,9 @@
                             <div class="row q-gutter-sm justify-end">
                                 <q-chip :color="todo && todo.isDone ? 'positive' : 'primary'" text-color="white"
                                     :icon="todo && todo.isDone ? 'check_circle' : 'play_circle'">
-                                    Durum: {{ todo && todo.isDone ? 'Tamamlandı' : 'Aktif' }}
+                                    {{ todo.status === 'unCompleted' ? 'Tamamlanmadı' :
+                                        todo.status === 'continue' ? 'Devam Ediyor' : todo.status === 'wait' ? 'Beklemede' :
+                                            todo.status === 'completed' ? 'Tamamlandı' : '???' }}
                                 </q-chip>
                                 <q-chip v-if="todo && todo.dueDate" color="orange" text-color="white" icon="schedule">
                                     {{ todo.dueDate | formatDate }}
@@ -37,7 +39,7 @@
 
                     <q-separator />
 
-                    
+
                 </q-card>
 
                 <div class="row q-mt-md q-gutter-sm">
@@ -62,7 +64,7 @@
                                     </q-item-section>
                                 </q-item>
                             </div>
-                            
+
                             <div class="col-12">
                                 <q-item dense>
                                     <q-item-section avatar>
@@ -81,7 +83,7 @@
                                     </q-item-section>
                                     <q-item-section>
                                         <q-item-label>Son düzenleme</q-item-label>
-                                        <q-item-label caption>{{ (todo && todo.updatedAt) ? (todo.updatedAt | formatDate) : '-' }}</q-item-label>
+                                        <q-item-label caption>{{ todo.updatedAt | formatDate }}</q-item-label>
                                     </q-item-section>
                                 </q-item>
                             </div>
@@ -117,7 +119,7 @@
                     </q-card-section>
                 </q-card>
             </div>
-            
+
         </div>
     </q-page>
 </template>

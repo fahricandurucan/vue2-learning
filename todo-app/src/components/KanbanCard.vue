@@ -4,7 +4,8 @@
     <div class="row items-start no-wrap">
       <div class="col">
         <div class="text-weight-medium" :class="task.status === 'completed' ? 'text-strike' : ''">{{ task.title }}</div>
-        <div class="text-caption q-mt-xs" :class="($q.dark.isActive ? 'text-grey-5' : 'text-grey-7') && (task.status === 'completed' ? 'text-strike' : '')">
+        <div class="text-caption q-mt-xs"
+          :class="($q.dark.isActive ? 'text-grey-5' : 'text-grey-7') && (task.status === 'completed' ? 'text-strike' : '')">
           {{ task.description }}
         </div>
       </div>
@@ -54,12 +55,25 @@ export default {
   methods: {
     getTagIcon(tag) {
       switch (tag) {
-        case 'İş': return 'work'
-        case 'Kişisel': return 'person'
-        case 'Önemli': return 'priority_high'
-        default: return 'label'
+        case 'İş':
+          return 'work'
+        case 'Kişisel':
+          return 'person'
+        case 'Okul':
+          return 'school'
+        case 'Alışveriş':
+          return 'shopping_cart'
+        case 'Sağlık':
+          return 'medical_services'
+        case 'Finans':
+          return 'account_balance_wallet'
+        case 'Hobi':
+          return 'brush'
+        default:
+          return 'label'
       }
     }
+
   }
 }
 </script>

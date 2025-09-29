@@ -9,7 +9,7 @@ const STORAGE_KEY = 'myTodoList'
 // Başlangıç state’i localStorage’dan yükle
 function loadInitialStates() {
   const saved = LocalStorage.getItem(STORAGE_KEY)
-  if (!saved) return { todos: [], darkMode: false }
+  if (!saved) return { todos: null, darkMode: false }
   return {
     todos: Array.isArray(saved.todos) ? saved.todos : null,
     darkMode: saved.darkMode || false
@@ -56,7 +56,7 @@ export default new Vuex.Store({
     description: 'Tüm dosyaları GitHub repository’sine yükle ve README güncelle.',
     isDone: false,
     priority: 'Yüksek',
-    tag: ['İş', 'Önemli'],
+    tag: ['İş'],
     createdAt: new Date('2025-09-19T09:30:00'),
     updatedAt: null,
     dueDate: new Date('2025-09-28T12:00:00'),
@@ -82,7 +82,7 @@ export default new Vuex.Store({
     description: 'Salonda ve mutfakta detaylı temizlik yap.',
     isDone: false,
     priority: 'Orta',
-    tag: ['Kişisel', 'Önemli'],
+    tag: ['Kişisel'],
     createdAt: new Date('2025-09-22T11:00:00'),
     updatedAt: null,
     dueDate: new Date('2025-09-26T16:00:00'),

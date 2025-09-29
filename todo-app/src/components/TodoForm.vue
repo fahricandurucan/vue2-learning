@@ -1,18 +1,20 @@
 <template>
   <div>
-    <q-card flat bordered class="q-pa-md" :class="$q.dark.isActive ? 'bg-blue-grey-9 text-grey-2' : 'bg-white text-dark'">
+    <q-card flat bordered class="q-pa-md"
+      :class="$q.dark.isActive ? 'bg-blue-grey-9 text-grey-2' : 'bg-white text-dark'">
       <q-card-section>
         <div class="row q-col-gutter-md">
           <div class="col-12">
             <q-input outlined dense rounded label="Başlık" placeholder="Kısa ve net bir başlık" v-model="newTodo.title"
               :error="titleError" :error-message="'Başlık zorunludur'" clearable counter maxlength="80"
               :color="$q.dark.isActive ? 'blue-4' : 'primary'"
-              :input-class="$q.dark.isActive ? 'text-grey-2' : 'text-dark'"/>
+              :input-class="$q.dark.isActive ? 'text-grey-2' : 'text-dark'" />
           </div>
 
           <div class="col-12">
-            <q-input outlined dense rounded type="textarea" autogrow label="Açıklama" placeholder="Detayları yazabilirsiniz"
-              v-model="newTodo.description" :color="$q.dark.isActive ? 'blue-4' : 'primary'"
+            <q-input outlined dense rounded type="textarea" autogrow label="Açıklama"
+              placeholder="Detayları yazabilirsiniz" v-model="newTodo.description"
+              :color="$q.dark.isActive ? 'blue-4' : 'primary'"
               :input-class="$q.dark.isActive ? 'text-grey-2' : 'text-dark'" />
           </div>
 
@@ -22,8 +24,8 @@
               :color="$q.dark.isActive ? 'blue-4' : 'primary'" />
           </div>
           <div class="col-12 col-md-8">
-            <q-select outlined dense rounded label="Etiketler" multiple use-chips :options="tagOptions" v-model="newTodo.tag"
-              hint="İsteğe bağlı" :color="$q.dark.isActive ? 'blue-4' : 'primary'" />
+            <q-select outlined dense rounded label="Etiketler" multiple use-chips :options="tagOptions"
+              v-model="newTodo.tag" hint="İsteğe bağlı" :color="$q.dark.isActive ? 'blue-4' : 'primary'" />
           </div>
 
           <div class="col-12 col-md-6">
@@ -51,8 +53,8 @@
         <div>
           <q-btn flat rounded :color="$q.dark.isActive ? 'grey-4' : 'grey-7'" icon="refresh" label="Temizle"
             @click="resetForm" />
-          <q-btn unelevated rounded :color="$q.dark.isActive ? 'blue-4' : 'primary'" icon="save" label="Kaydet" class="q-ml-sm"
-            @click="saveNewTodo" />
+          <q-btn unelevated rounded :color="$q.dark.isActive ? 'blue-4' : 'primary'" icon="save" label="Kaydet"
+            class="q-ml-sm" @click="saveNewTodo" />
         </div>
       </q-card-actions>
     </q-card>
@@ -80,7 +82,7 @@ export default {
       titleError: false,
       priorityError: false,
       priorityOptions: ['Düşük', 'Orta', 'Yüksek'],
-      tagOptions: ['İş', 'Kişisel', 'Önemli']
+      tagOptions: ['İş', 'Kişisel', 'Okul', 'Alışveriş', 'Sağlık', 'Finans', 'Hobi']
     }
   },
   methods: {
