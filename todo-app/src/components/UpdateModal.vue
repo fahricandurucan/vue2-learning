@@ -1,6 +1,6 @@
 <template>
     <div>
-        <q-btn dense flat :color="$q.dark.isActive ? 'blue-4' : 'primary'" icon="edit" @click="openDialog">
+        <q-btn dense flat :color="$q.dark.isActive ? 'blue-4' : 'primary'" icon="edit" @click.stop.prevent="openDialog" @mousedown.stop>
             <q-tooltip>Güncelle</q-tooltip>
         </q-btn>
 

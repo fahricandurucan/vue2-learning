@@ -56,7 +56,7 @@
                 :class="$q.dark.isActive ? 'bg-blue-grey-9 text-grey-2' : 'bg-white text-dark'">
                 <transition-group name="fade" tag="div">
                     <div v-for="(todo, index) in activeTodoList" :key="(todo.id || index) + '-active'">
-                        <q-item :key="todo.id || index" clickable v-ripple class="q-py-sm">
+                        <q-item :key="todo.id || index" clickable v-ripple class="q-py-sm" :to="{name: 'todo-detail', params:{id: todo.id}}">
                             <q-item-section avatar>
                                 <q-avatar :color="todo.isDone ? 'positive' : ($q.dark.isActive ? 'grey-6' : 'grey-4')"
                                     text-color="white">
@@ -114,16 +114,16 @@
                             </q-item-section>
 
                             <q-item-section side top>
-                                <div class="row items-center q-gutter-xs">
+                                <div class="row items-center q-gutter-xs" @click.stop @mousedown.stop>
                                     <update-modal :todo="todo"></update-modal>
                                     <confirm-delete :todo-id="todo.id"></confirm-delete>
 
                                     <q-btn v-if="todo.isDone" flat round dense icon="check_circle" color="positive"
-                                        @click="toggleTodoDone(todo)">
+                                        @click.stop.prevent="toggleTodoDone(todo)" @mousedown.stop>
                                         <q-tooltip>Tamamlandı</q-tooltip>
                                     </q-btn>
                                     <q-btn v-else flat round dense icon="radio_button_unchecked"
-                                        :color="$q.dark.isActive ? 'grey-4' : 'grey-7'" @click="toggleTodoDone(todo)">
+                                        :color="$q.dark.isActive ? 'grey-4' : 'grey-7'" @click.stop.prevent="toggleTodoDone(todo)" @mousedown.stop>
                                         <q-tooltip>Henüz tamamlanmadı</q-tooltip>
                                     </q-btn>
                                 </div>
@@ -144,7 +144,7 @@
                 :class="$q.dark.isActive ? 'bg-blue-grey-9 text-grey-2' : 'bg-grey-1 text-dark'">
                 <transition-group name="fade" tag="div">
                     <div v-for="(todo, index) in completedTodoList" :key="(todo.id || index) + '-done'">
-                        <q-item :key="todo.id || index" class="q-py-sm">
+                        <q-item :key="todo.id || index" class="q-py-sm" :to="{name: 'todo-detail', params:{id: todo.id}}">
                             <q-item-section avatar>
                                 <q-avatar color="positive" text-color="white">
                                     <q-icon name="check" />
@@ -290,7 +290,8 @@ export default {
             this.searchType = ''
             this.searchPriority = ''
             this.searchTags = []
-        }
+        },
+        
 
     }
 

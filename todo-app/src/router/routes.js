@@ -1,5 +1,6 @@
 import Home from 'src/pages/Home.vue'
 import Settings from 'src/pages/Settings.vue'
+import TodoDetail from 'src/pages/TodoDetail.vue'
 import Todos from 'src/pages/Todos.vue'
 
 const routes = [
@@ -9,9 +10,11 @@ const routes = [
     children: [
       { path: '', component: Home },
       {path: '/todos', component: Todos},
-      {path: '/settings', component: Settings}
+      {path: '/settings', component: Settings},
+      {path: '/detail/:id', name: 'todo-detail', component: TodoDetail},
     ]
   },
+ 
 
 
 

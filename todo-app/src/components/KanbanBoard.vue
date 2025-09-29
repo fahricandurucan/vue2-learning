@@ -3,20 +3,22 @@
     <!-- Başlık -->
     <div class="row items-center q-mb-lg">
       <div class="col">
-    <div class="text-h5" :class="$q.dark.isActive ? 'text-blue-3' : 'text-dark'">Kanban</div>
-    <div class="text-caption" :class="$q.dark.isActive ? 'text-grey-5' : 'text-grey'">
+        <div class="text-h5" :class="$q.dark.isActive ? 'text-blue-3' : 'text-dark'">Kanban</div>
+        <div class="text-caption" :class="$q.dark.isActive ? 'text-grey-5' : 'text-grey'">
           Durum bazlı görev görünümü
         </div>
       </div>
       <div class="col-auto q-gutter-sm">
-        <q-btn dense :unelevated="!$q.dark.isActive" :outline="$q.dark.isActive" :color="$q.dark.isActive ? 'blue-4' : 'primary'" icon="add" label="Yeni Görev" @click="goHome" />
+        <q-btn dense :unelevated="!$q.dark.isActive" :outline="$q.dark.isActive"
+          :color="$q.dark.isActive ? 'blue-4' : 'primary'" icon="add" label="Yeni Görev" @click="goHome" />
       </div>
     </div>
 
     <!-- Kanban kolonları -->
     <div class="row q-col-gutter-md">
       <div v-for="(col, cIdx) in localColumns" :key="cIdx" class="col-12 col-md-3">
-        <q-card :class="$q.dark.isActive ? 'bg-blue-grey-9 text-grey-2' : 'bg-white text-dark'" class="column full-height">
+        <q-card :class="$q.dark.isActive ? 'bg-blue-grey-9 text-grey-2' : 'bg-white text-dark'"
+          class="column full-height">
           <q-card-section class="row items-center q-gutter-sm">
             <q-badge :color="col.color" :text-color="col.textColor || ($q.dark.isActive ? 'white' : 'white')">{{
               col.title }}</q-badge>
@@ -27,10 +29,12 @@
           <q-scroll-area style="height: calc(100vh - 260px)">
             <div class="q-pa-sm column q-gutter-sm" @dragover.prevent @drop="onDropColumn(cIdx)">
               <div v-for="(t, idx) in (col.items || [])" :key="cIdx + '-' + idx" class="kanban-draggable"
-                draggable="true" @dragstart="onDragStart(cIdx, idx)" @dragend="onDragEnd">
+                :draggable="!(t.isDone && t.status === 'completed')" @dragstart="onDragStart(cIdx, idx)"
+                @dragend="onDragEnd">
                 <kanban-card :task="t" :columnIdx="cIdx" />
               </div>
-              <div v-if="!col.items || col.items.length === 0" class="empty-column-placeholder" :class="$q.dark.isActive ? 'empty-dark' : ''">
+              <div v-if="!col.items || col.items.length === 0" class="empty-column-placeholder"
+                :class="$q.dark.isActive ? 'empty-dark' : ''">
                 <div class="text-center q-pa-lg" :class="$q.dark.isActive ? 'text-grey-5' : 'text-grey-5'">
                   <q-icon name="inbox" size="48px" class="q-mb-sm" />
                   <div class="text-caption">Kartları buraya sürükleyin</div>

@@ -3,8 +3,8 @@
     <!-- Başlık ve açıklama -->
     <div class="row items-start no-wrap">
       <div class="col">
-        <div class="text-weight-medium">{{ task.title }}</div>
-        <div class="text-caption q-mt-xs" :class="$q.dark.isActive ? 'text-grey-5' : 'text-grey-7'">
+        <div class="text-weight-medium" :class="task.status === 'completed' ? 'text-strike' : ''">{{ task.title }}</div>
+        <div class="text-caption q-mt-xs" :class="($q.dark.isActive ? 'text-grey-5' : 'text-grey-7') && (task.status === 'completed' ? 'text-strike' : '')">
           {{ task.description }}
         </div>
       </div>

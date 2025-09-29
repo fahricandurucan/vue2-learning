@@ -119,6 +119,7 @@ export default new Vuex.Store({
   mutations: {
     setTodos(state, todos){ state.myTodoList = todos },
     addNewTodo(state, todo){
+      console.log('created at = '+todo.createdAt)
       state.myTodoList.push(todo)
     },
     toggleTodoDone(state, todoId){
