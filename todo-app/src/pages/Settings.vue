@@ -41,15 +41,8 @@
             <div class="q-gutter-y-sm">
               <div :class="$q.dark.isActive ? 'text-grey-4' : 'text-grey-7'" class="text-body2">Uygulama teması ve dil
                 ayarlarını buradan yönetebilirsiniz.</div>
-              <div :class="$q.dark.isActive ? 'text-grey-4' : 'text-grey-7'" class="text-body2">Bildirimler ve profil
-                ayarları bu sürümde devre dışı bırakılmıştır.</div>
             </div>
           </q-card-section>
-
-          <q-card-actions>
-            <q-btn :color="$q.dark.isActive ? 'blue-4' : 'primary'" label="Kaydet" unelevated />
-            <q-btn :color="$q.dark.isActive ? 'grey-5' : 'grey-8'" label="Sıfırla" flat />
-          </q-card-actions>
         </q-card>
       </div>
 
@@ -64,36 +57,43 @@
 
           <q-card-section>
             <div class="row q-col-gutter-md">
+              <!-- Toplam Görev -->
               <div class="col-12 col-sm-6 col-md-3">
-                <q-card flat bordered :class="$q.dark.isActive ? 'bg-blue-grey-10 text-grey-2' : 'bg-grey-1 text-dark'"
-                  class="q-pa-md">
-                  <div class="text-caption" :class="$q.dark.isActive ? 'text-grey-5' : 'text-grey-7'">Toplam Görev</div>
+                <q-card flat bordered class="q-pa-md"
+                  :class="$q.dark.isActive ? 'bg-blue-grey-8 text-white' : 'bg-blue-3 text-dark'">
+                  <div class="text-caption">Toplam Görev</div>
                   <div class="text-h6">{{ allTodosLenght }}</div>
                 </q-card>
               </div>
+
+              <!-- Aktif -->
               <div class="col-12 col-sm-6 col-md-3">
-                <q-card flat bordered :class="$q.dark.isActive ? 'bg-blue-grey-10 text-grey-2' : 'bg-grey-1 text-dark'"
-                  class="q-pa-md">
-                  <div class="text-caption" :class="$q.dark.isActive ? 'text-grey-5' : 'text-grey-7'">Aktif</div>
+                <q-card flat bordered class="q-pa-md"
+                  :class="$q.dark.isActive ? 'bg-blue-6 text-white' : 'bg-green-4 text-dark'">
+                  <div class="text-caption">Aktif</div>
                   <div class="text-h6">{{ activeTodoListLenght }}</div>
                 </q-card>
               </div>
+
+              <!-- Tamamlanan -->
               <div class="col-12 col-sm-6 col-md-3">
-                <q-card flat bordered :class="$q.dark.isActive ? 'bg-blue-grey-10 text-grey-2' : 'bg-grey-1 text-dark'"
-                  class="q-pa-md">
-                  <div class="text-caption" :class="$q.dark.isActive ? 'text-grey-5' : 'text-grey-7'">Tamamlanan</div>
+                <q-card flat bordered class="q-pa-md"
+                  :class="$q.dark.isActive ? 'bg-green-7 text-white' : 'bg-grey-3 text-dark'">
+                  <div class="text-caption">Tamamlanan</div>
                   <div class="text-h6">{{ completedTodoListLenght }}</div>
                 </q-card>
               </div>
+
+              <!-- Beklemede / Devam -->
               <div class="col-12 col-sm-6 col-md-3">
-                <q-card flat bordered :class="$q.dark.isActive ? 'bg-blue-grey-10 text-grey-2' : 'bg-grey-1 text-dark'"
-                  class="q-pa-md">
-                  <div class="text-caption" :class="$q.dark.isActive ? 'text-grey-5' : 'text-grey-7'">Beklemede/Devam
-                  </div>
+                <q-card flat bordered class="q-pa-md"
+                  :class="$q.dark.isActive ? 'bg-orange-7 text-white' : 'bg-orange-3 text-dark'">
+                  <div class="text-caption">Beklemede / Devam</div>
                   <div class="text-h6">{{ inProgressOrOnHoldLenght }}</div>
                 </q-card>
               </div>
             </div>
+
           </q-card-section>
         </q-card>
       </div>
@@ -108,13 +108,7 @@ export default {
     return {
       form: {
         language: 'tr',
-        theme: 'system',
         darkMode: false,
-        emailNotif: true,
-        pushNotif: true,
-        summaryEmail: false,
-        displayName: 'User',
-        password: ''
       },
       languageOptions: [
         { label: 'Türkçe', value: 'tr' },

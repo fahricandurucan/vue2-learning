@@ -82,7 +82,7 @@
                                         : (todo.priority === 'Orta'
                                             ? ($q.dark.isActive ? 'blue-4' : 'blue')
                                             : (todo.priority === 'Yüksek'
-                                                ? ($q.dark.isActive ? 'red-4' : 'red')
+                                                ? ($q.dark.isActive ? 'red' : 'red-4')
                                                 : 'grey'))" text-color="white"
                                         :label="'Öncelik: ' + (todo.priority || 'Belirsiz')" />
 
@@ -141,7 +141,7 @@
                             </q-item-section>
                         </q-item>
                         <q-separator :key="'active-sep-' + (todo.id || index)" spaced inset="item"
-                            :color="$q.dark.isActive ? 'grey-8' : 'grey-4'" />
+                            :color="$q.dark.isActive ? 'grey-6' : 'grey-3'" />
                     </div>
                 </transition-group>
             </q-list>
@@ -159,7 +159,7 @@
                         <q-item :key="todo.id || index" class="q-py-sm"
                             :to="{ name: 'todo-detail', params: { id: todo.id } }">
                             <q-item-section avatar>
-                                <q-avatar color="positive" text-color="white">
+                                <q-avatar :color="$q.dark.isActive ? 'positive' : 'green-4'" text-color="white">
                                     <q-icon name="check" />
                                 </q-avatar>
                             </q-item-section>
@@ -180,7 +180,7 @@
                                         : (todo.priority === 'Orta'
                                             ? ($q.dark.isActive ? 'blue-4' : 'blue')
                                             : (todo.priority === 'Yüksek'
-                                                ? ($q.dark.isActive ? 'red-4' : 'red')
+                                                ? ($q.dark.isActive ? 'red' : 'red-4')
                                                 : 'grey'))" text-color="white"
                                         :label="'Öncelik: ' + (todo.priority || 'Belirsiz')" />
                                     <template v-for="(tag, i) in todo.tag">
@@ -198,7 +198,8 @@
                                         :text-color="$q.dark.isActive ? 'white' : 'black'" v-if="todo.updatedAt">
                                         Son düzenleme: {{ todo.updatedAt | formatDate }}
                                     </q-chip>
-                                    <q-chip dense square color="positive" text-color="white" v-if="todo.completedAt">
+                                    <q-chip dense square :color="$q.dark.isActive ? 'positive' : 'green-4'"
+                                        text-color="white" v-if="todo.completedAt">
                                         Tamamlanma: {{ todo.completedAt | formatDate }}
                                     </q-chip>
                                 </div>
@@ -215,7 +216,7 @@
                             </q-item-section>
                         </q-item>
                         <q-separator :key="'done-sep-' + (todo.id || index)" spaced inset="item"
-                            :color="$q.dark.isActive ? 'grey-8' : 'grey-4'" />
+                            :color="$q.dark.isActive ? 'grey-6' : 'grey-3'" />
                     </div>
                 </transition-group>
             </q-list>
