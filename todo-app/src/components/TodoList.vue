@@ -52,8 +52,7 @@
         </div>
 
         <!-- Tamamlanmayan görevler -->
-        <div v-if="activeTodoList && activeTodoList.length" class="q-mb-md"
-            style="max-height: 300px; overflow-y: auto;">
+        <div v-if="activeTodoList && activeTodoList.length" class="q-mb-md">
             <q-list bordered separator class="rounded-borders"
                 :class="$q.dark.isActive ? 'bg-blue-grey-9 text-grey-2' : 'bg-white text-dark'">
                 <transition-group name="fade" tag="div">
@@ -78,27 +77,26 @@
 
                                 <div class="row items-center q-gutter-xs q-mt-sm">
                                     <q-badge :color="todo.priority === 'Düşük'
-                                        ? ($q.dark.isActive ? 'orange-6' : 'orange-8')
+                                        ? ($q.dark.isActive ? 'orange-6' : 'orange-2')
                                         : (todo.priority === 'Orta'
-                                            ? ($q.dark.isActive ? 'blue-4' : 'blue')
+                                            ? ($q.dark.isActive ? 'blue-6' : 'blue-2')
                                             : (todo.priority === 'Yüksek'
-                                                ? ($q.dark.isActive ? 'red' : 'red-4')
-                                                : 'grey'))" text-color="white"
+                                                ? ($q.dark.isActive ? 'red' : 'red-2')
+                                                : 'grey'))" :text-color="$q.dark.isActive ? 'white' : 'black'"
                                         :label="'Öncelik: ' + (todo.priority || 'Belirsiz')" />
 
-                                    <template v-for="(tag, i) in todo.tag">
-                                        <q-chip :key="i" dense :color="$q.dark.isActive ? 'grey-7' : 'grey-5'"
-                                            :text-color="$q.dark.isActive ? 'white' : 'black'" :icon="tag === 'İş' ? 'work'
-                                                : tag === 'Kişisel' ? 'person'
-                                                    : tag === 'Okul' ? 'school'
-                                                        : tag === 'Alışveriş' ? 'shopping_cart'
-                                                            : tag === 'Sağlık' ? 'medical_services'
-                                                                : tag === 'Finans' ? 'account_balance_wallet'
-                                                                    : tag === 'Hobi' ? 'brush'
-                                                                        : 'label'">
-                                            {{ tag }}
-                                        </q-chip>
-                                    </template>
+                                    <q-chip v-for="(tag, i) in todo.tag" :key="i" dense
+                                        :color="$q.dark.isActive ? 'grey-7' : 'grey-5'"
+                                        :text-color="$q.dark.isActive ? 'white' : 'black'" :icon="tag === 'İş' ? 'work'
+                                            : tag === 'Kişisel' ? 'person'
+                                                : tag === 'Okul' ? 'school'
+                                                    : tag === 'Alışveriş' ? 'shopping_cart'
+                                                        : tag === 'Sağlık' ? 'medical_services'
+                                                            : tag === 'Finans' ? 'account_balance_wallet'
+                                                                : tag === 'Hobi' ? 'brush'
+                                                                    : 'label'">
+                                        {{ tag }}
+                                    </q-chip>
 
                                     <q-separator vertical spaced class="q-ml-xs q-mr-xs" />
 
@@ -128,11 +126,8 @@
                                     <update-modal :todo="todo"></update-modal>
                                     <confirm-delete :todo-id="todo.id"></confirm-delete>
 
-                                    <q-btn v-if="todo.isDone" flat round dense icon="check_circle" color="positive"
-                                        @click.stop.prevent="toggleTodoDone(todo)" @mousedown.stop>
-                                        <q-tooltip>Tamamlandı</q-tooltip>
-                                    </q-btn>
-                                    <q-btn v-else flat round dense icon="radio_button_unchecked"
+
+                                    <q-btn flat round dense icon="radio_button_unchecked"
                                         :color="$q.dark.isActive ? 'grey-4' : 'grey-7'"
                                         @click.stop.prevent="toggleTodoDone(todo)" @mousedown.stop>
                                         <q-tooltip>Henüz tamamlanmadı</q-tooltip>
@@ -176,19 +171,25 @@
                                 </div>
                                 <div class="row items-center q-gutter-xs q-mt-sm">
                                     <q-badge :color="todo.priority === 'Düşük'
-                                        ? ($q.dark.isActive ? 'orange-6' : 'orange-8')
+                                        ? ($q.dark.isActive ? 'orange-6' : 'orange-2')
                                         : (todo.priority === 'Orta'
-                                            ? ($q.dark.isActive ? 'blue-4' : 'blue')
+                                            ? ($q.dark.isActive ? 'blue-6' : 'blue-2    ')
                                             : (todo.priority === 'Yüksek'
-                                                ? ($q.dark.isActive ? 'red' : 'red-4')
-                                                : 'grey'))" text-color="white"
+                                                ? ($q.dark.isActive ? 'red' : 'red-2')
+                                                : 'grey'))" :text-color="$q.dark.isActive ? 'white' : 'black'"
                                         :label="'Öncelik: ' + (todo.priority || 'Belirsiz')" />
-                                    <template v-for="(tag, i) in todo.tag">
-                                        <q-chip :key="i" dense :color="$q.dark.isActive ? 'grey-7' : 'grey-5'"
-                                            :text-color="$q.dark.isActive ? 'white' : 'black'">
-                                            {{ tag }}
-                                        </q-chip>
-                                    </template>
+                                    <q-chip v-for="(tag, i) in todo.tag" :key="i" dense
+                                        :color="$q.dark.isActive ? 'grey-7' : 'grey-5'"
+                                        :text-color="$q.dark.isActive ? 'white' : 'black'" :icon="tag === 'İş' ? 'work'
+                                            : tag === 'Kişisel' ? 'person'
+                                                : tag === 'Okul' ? 'school'
+                                                    : tag === 'Alışveriş' ? 'shopping_cart'
+                                                        : tag === 'Sağlık' ? 'medical_services'
+                                                            : tag === 'Finans' ? 'account_balance_wallet'
+                                                                : tag === 'Hobi' ? 'brush'
+                                                                    : 'label'">
+                                        {{ tag }}
+                                    </q-chip>
                                     <q-separator vertical spaced class="q-ml-xs q-mr-xs" />
                                     <q-chip dense square :color="$q.dark.isActive ? 'grey-7' : 'grey-4'"
                                         :text-color="$q.dark.isActive ? 'white' : 'black'" v-if="todo.createdAt">
@@ -207,10 +208,11 @@
                             <q-item-section side top>
                                 <div class="row items-center q-gutter-xs">
                                     <confirm-delete :todo-id="todo.id"></confirm-delete>
-                                    <q-btn flat round dense icon="history"
-                                        :color="$q.dark.isActive ? 'grey-4' : 'grey-7'"
-                                        @click.stop="toggleTodoDone(todo)">
-                                        <q-tooltip>Geri al</q-tooltip>
+
+                                    <q-btn flat round dense icon="check_circle"
+                                        :color="$q.dark.isActive ? 'green' : 'green'"
+                                        @click.stop.prevent="toggleTodoDone(todo)" @mousedown.stop>
+                                        <q-tooltip>Geri Al</q-tooltip>
                                     </q-btn>
                                 </div>
                             </q-item-section>
@@ -307,8 +309,6 @@ export default {
             this.searchPriority = ''
             this.searchTags = []
         },
-
-
     }
 
 }

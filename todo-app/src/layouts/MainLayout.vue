@@ -68,7 +68,14 @@ const menuItems = [
     caption: 'Uygulama ayarları',
     icon: 'settings',
     to: '/settings'
+  },
+  {
+    title: 'Geciken Görevler',
+    caption: 'Süresi Geçen Görevler',
+    icon: 'schedule', 
+    to: '/lateTodos'
   }
+
 ]
 
 export default {

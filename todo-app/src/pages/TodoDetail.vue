@@ -134,9 +134,9 @@ export default {
             todo: null,
         }
     },
+    //CREATED DA OLUR
     mounted() {
         const id = this.$route.params.id
-        // store’dan veya API’den todo’yu bul
         this.todo = this.$store.getters.allTodos.find(t => t.id == id)
     }
 

@@ -101,10 +101,10 @@ export default new Vuex.Store({
       return state.myTodoList;
     },
     completedTodoList(state){
-      return state.myTodoList.filter(todo => (todo.isDone === true) && (todo.status === 'completed'))
+      return state.myTodoList.filter(todo => (todo.isDone === true) && (todo.status === 'completed')).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     },
     activeTodoList(state){
-      return state.myTodoList.filter(todo => (todo.isDone === false) )
+      return state.myTodoList.filter(todo => (todo.isDone === false)).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     },
      unCompletedTodoList(state){
       return state.myTodoList.filter(todo =>  (todo.status === 'unCompleted'))
@@ -114,7 +114,13 @@ export default new Vuex.Store({
     },
      onHoldTodoList(state){
       return state.myTodoList.filter(todo => todo.status === 'wait')
+    },
+    timeUpTodos(state) {
+      return state.myTodoList
+      .filter(todo => (!todo.isDone && (new Date(todo.dueDate) < new Date())))
+      .sort((a, b) => new Date(b.dueDate) - new Date(a.dueDate));
     }
+
   },
   mutations: {
     setTodos(state, todos){ state.myTodoList = todos },
@@ -162,10 +168,23 @@ export default new Vuex.Store({
         todo.completedAt = new Date()
       }
     },
+    postponeTodo(state, { todoId, postpone }) {
+      const todo = state.myTodoList.find(todo => todo.id === todoId)
+      if (!todo) return
+
+      const now = new Date()
+      const newDueDate = new Date(now.getTime() + postpone * 24 * 60 * 60 * 1000)
+      todo.dueDate = newDueDate
+      todo.updatedAt = new Date()
+      todo.status = 'unCompleted'
+      todo.isDone = false
+
+    },
     setAppTheme(state, isDark){
       state.darkMode = isDark;
     }
   },
+
 
   // async ya da mutation çağır
   actions: {
@@ -186,6 +205,9 @@ export default new Vuex.Store({
     },
     changeTaskStatusForKanban({ commit }, { todoId, status }){
       commit('changeTaskStatusForKanban', { todoId, status })
+    },
+    postponeTodo({ commit }, { todoId, postpone }){
+      commit('postponeTodo', {todoId, postpone})
     },
     setAppTheme({ commit }, isDark){
       commit('setAppTheme',isDark)

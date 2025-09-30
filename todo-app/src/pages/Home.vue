@@ -8,8 +8,9 @@
                     Görevlerinizi kolayca ekleyin, arayın ve yönetin.
                 </div>
                 <template v-slot:action>
-                    <q-btn :flat="!$q.dark.isActive" :outline="$q.dark.isActive" dense :color="$q.dark.isActive ? 'blue-4' : 'white'" icon="tips_and_updates"
-                        label="İpucu" @click="tipInfo" />
+                    <q-btn :flat="!$q.dark.isActive" :outline="$q.dark.isActive" dense
+                        :color="$q.dark.isActive ? 'blue-4' : 'white'" icon="tips_and_updates" label="İpucu"
+                        @click="tipInfo" />
                 </template>
             </q-banner>
 
@@ -44,7 +45,14 @@ export default {
     },
     methods: {
         tipInfo() {
-            this.$q.notify({ type: 'info', message: 'Formu doldurup Kaydet ile ekleyebilirsiniz.' });
+            this.$q.notify({
+                type: 'info',
+                message: 'Formu doldurup "Kaydet" ile ekleyebilirsiniz.',
+                color: this.$q.dark.isActive ? 'blue-4' : 'blue',
+                textColor: 'white',
+                position: 'bottom',
+                timeout: 2000 
+            })
         }
     }
 

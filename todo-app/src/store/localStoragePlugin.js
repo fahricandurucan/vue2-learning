@@ -10,6 +10,7 @@ export const localStoragePlugin = (storageKey = 'myTodoList') => {
     'toggleTodoDone',
     'changeTaskStatusForKanban',
     'setTodos',
+    'postponeTodo',
     'setAppTheme'
   ]
 
